@@ -33,11 +33,16 @@ enum ConsoleColor
 enum message_code
 {
      Openning = 0,
-     Choose_menu = 1
+     Choose_menu = 1,
+     Temporary_taskbook = 2,
+     Command_mark = 3
 };
-//
+// application functions
 void SetColor(int text, int background);
 void DefaultColor();
 void ConsoleOUT(int code_message);
-//
+int choose();
+// For temporary task book
+void WriteTasks(int number_task);
+
 #endif
