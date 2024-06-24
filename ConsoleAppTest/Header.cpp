@@ -30,7 +30,7 @@ void ConsoleOUT(int code_message) {
         break;
     case 3:
         SetColor(LightGray, Black);
-        cout << " >";
+        cout << " > ";
         break;
     default:
         break;
@@ -69,7 +69,7 @@ void WriteTasks(int number_task) {
     do {
         counter++;
         cout << counter << " - [ ] ";
-        cin >> user_task;
+        getline(cin >> ws, user_task);
         user_task = "";
     } while (counter != number_task);
 }
