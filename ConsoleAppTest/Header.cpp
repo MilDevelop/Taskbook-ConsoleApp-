@@ -63,7 +63,17 @@ int choose() {
     } while (right_input == false);
 }
 
-void WriteTasks(int number_task) {
+
+void Temporary_tasks::save(string user_task, int number_task) {
+    for (int i = 1; i <= number_task; i++) {
+        vector<string> one_line;
+        string num = to_string(i);
+        one_line = { num, " - [", " ", "] " };
+        two_dimensional_array.push_back(one_line);
+    }
+}
+
+void Temporary_tasks::WriteTasks(int number_task) {
     int counter{ 0 };
     string user_task{};
     do {
@@ -73,4 +83,3 @@ void WriteTasks(int number_task) {
         user_task = "";
     } while (counter != number_task);
 }
-

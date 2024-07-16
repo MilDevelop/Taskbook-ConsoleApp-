@@ -15,8 +15,9 @@ int main()
         WriteTasks(number_of_tasks);
         while (not_completed != 0) {
             ConsoleOUT(Command_mark);
-            string command{};
+            string command{}, cmd;
             cin >> command;
+            //if (command == "change_status")
         }
     }
     else if (User_choose == 5) { return 0; }

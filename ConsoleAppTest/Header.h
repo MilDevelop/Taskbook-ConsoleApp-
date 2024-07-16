@@ -2,6 +2,9 @@
 #define HEADER_H
 //
 #include <iostream>
+#include <sstream>
+#include <istream>
+#include <ostream>
 #include <cstdlib>
 #include <cmath>
 #include <vector>
@@ -37,12 +40,18 @@ enum message_code
      Temporary_taskbook = 2,
      Command_mark = 3
 };
+extern vector<vector<string>> two_dimensional_array = {};
 // application functions
 void SetColor(int text, int background);
 void DefaultColor();
 void ConsoleOUT(int code_message);
 int choose();
 // For temporary task book
-void WriteTasks(int number_task);
+class Temporary_tasks {
+public:
+    static void save(string user_task, int number_task);
+    static void WriteTasks(int number_task);
+};
+
 
 #endif
