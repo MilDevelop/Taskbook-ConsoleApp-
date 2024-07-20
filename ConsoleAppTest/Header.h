@@ -38,20 +38,21 @@ enum message_code
      Openning = 0,
      Choose_menu = 1,
      Temporary_taskbook = 2,
-     Command_mark = 3
+     Command_mark = 3,
+     Number_of_stat = 4,
 };
-extern vector<vector<string>> two_dimensional_array = {};
+inline vector<vector<string>> two_dimensional_array;
 // application functions
 void SetColor(int text, int background);
 void DefaultColor();
 void ConsoleOUT(int code_message);
 int choose();
 // For temporary task book
-class Temporary_tasks {
-public:
-    static void save(string user_task, int number_task);
-    static void WriteTasks(int number_task);
-};
+
+void save(string user_task, int number_task);
+void OutputTasks(int number_change);
+void WriteTasks(int number_task);
+int CheckNotComplited();
 
 
 #endif

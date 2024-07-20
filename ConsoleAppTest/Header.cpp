@@ -32,6 +32,10 @@ void ConsoleOUT(int code_message) {
         SetColor(LightGray, Black);
         cout << " > ";
         break;
+    case 4:
+        DefaultColor();
+        cout << "Enter the number change task: "sv;
+        break;
     default:
         break;
     }
@@ -58,13 +62,13 @@ int choose() {
             return 5;
         default:
             right_input = false;
-            break;
+            return 0;
         }
     } while (right_input == false);
 }
 
 
-void Temporary_tasks::save(string user_task, int number_task) {
+void save(string user_task, int number_task) {
     for (int i = 1; i <= number_task; i++) {
         vector<string> one_line;
         string num = to_string(i);
@@ -73,7 +77,7 @@ void Temporary_tasks::save(string user_task, int number_task) {
     }
 }
 
-void Temporary_tasks::WriteTasks(int number_task) {
+void WriteTasks(int number_task) {
     int counter{ 0 };
     string user_task{};
     do {
@@ -82,4 +86,35 @@ void Temporary_tasks::WriteTasks(int number_task) {
         getline(cin >> ws, user_task);
         user_task = "";
     } while (counter != number_task);
+}
+
+void OutputTasks(int number_change) {
+    for (auto& iter : two_dimensional_array) {
+        for (int j = 0; j < iter.size(); j++) {
+            if (j == 2 and iter[j] == " ") {
+                cout << "X";
+                two_dimensional_array[number_change - 1][2] = "X";
+            }
+            else if (j == 2 and iter[j] == "X") {
+                cout << " ";
+                two_dimensional_array[number_change - 1][2] = " ";
+            }
+            else {
+                cout << iter[j];
+            }
+        }
+        cout << endl;
+    }
+}
+
+int CheckNotComplited() {
+    int counter{};
+    for (auto& iter : two_dimensional_array) {
+        for (int j = 0; j < iter.size(); j++) {
+            if (j == 2 and iter[j] == " ") {
+                counter++;
+            }
+        }
+    }
+    return counter;
 }
