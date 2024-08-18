@@ -68,13 +68,11 @@ int choose() {
 }
 
 
-void save(string user_task, int number_task) {
-    for (int i = 1; i <= number_task; i++) {
-        vector<string> one_line;
-        string num = to_string(i);
-        one_line = { num, " - [", " ", "] " };
-        two_dimensional_array.push_back(one_line);
-    }
+void save(string user_task, int num_task) {
+    vector<string> one_line;
+    string num = to_string(num_task);
+    one_line = { num, " - [", " ", "] ", user_task};
+    two_dimensional_array.push_back(one_line);
 }
 
 void WriteTasks(int number_task) {
@@ -84,23 +82,24 @@ void WriteTasks(int number_task) {
         counter++;
         cout << counter << " - [ ] ";
         getline(cin >> ws, user_task);
+        save(user_task, counter);
         user_task = "";
     } while (counter != number_task);
 }
 
 void OutputTasks(int number_change) {
-    for (auto& iter : two_dimensional_array) {
-        for (int j = 0; j < iter.size(); j++) {
-            if (j == 2 and iter[j] == " ") {
+    for (int iter = 0; iter < two_dimensional_array.size(); iter++) {
+        for (int j = 0; j < two_dimensional_array[iter].size(); j++) {
+            if (j == 2 and two_dimensional_array[iter][j] == " " and iter == number_change - 1) {
                 cout << "X";
-                two_dimensional_array[number_change - 1][2] = "X";
+                two_dimensional_array[iter][2] = "X";
             }
-            else if (j == 2 and iter[j] == "X") {
+            else if (j == 2 and two_dimensional_array[iter][j] == "X" and iter == number_change - 1) {
                 cout << " ";
-                two_dimensional_array[number_change - 1][2] = " ";
+                two_dimensional_array[iter][2] = " ";
             }
             else {
-                cout << iter[j];
+                cout << two_dimensional_array[iter][j];
             }
         }
         cout << endl;
