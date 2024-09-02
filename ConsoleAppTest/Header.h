@@ -51,8 +51,14 @@ int choose();
 
 void save(string user_task, int number_task);
 void OutputTasks(int number_change);
+void OutputTasks(bool value);
 void WriteTasks(int number_task);
 int CheckNotComplited();
+
+//Actions for menu
+namespace Acts {
+    bool TemporaryTaskBook();
+}
 
 
 #endif

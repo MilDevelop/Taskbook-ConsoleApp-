@@ -106,14 +106,62 @@ void OutputTasks(int number_change) {
     }
 }
 
+void OutputTasks(bool value) {
+    for (int iter = 0; iter < two_dimensional_array.size(); iter++) {
+        for (int j = 0; j < two_dimensional_array[iter].size(); j++) {
+            if (j == 2 and two_dimensional_array[iter][j] == " ") {
+                cout << "X";
+                two_dimensional_array[iter][2] = "X";
+            }
+            else if (j == 2 and two_dimensional_array[iter][j] == "X") {
+                cout << " ";
+                two_dimensional_array[iter][2] = " ";
+            }
+            else {
+                cout << two_dimensional_array[iter][j];
+            }
+        }
+        cout << endl;
+    }
+}
+
 int CheckNotComplited() {
     int counter{};
     for (auto& iter : two_dimensional_array) {
-        for (int j = 0; j < iter.size(); j++) {
-            if (j == 2 and iter[j] == " ") {
-                counter++;
-            }
+        if (iter[2] == " ") {
+            counter++;
         }
     }
     return counter;
+}
+
+bool Acts::TemporaryTaskBook() {
+    ConsoleOUT(Temporary_taskbook);
+    unsigned int number_of_tasks{}, not_completed{};
+    cin >> number_of_tasks;
+    not_completed = number_of_tasks;
+    WriteTasks(number_of_tasks);
+    string command{};
+    while (not_completed != 0) {
+        ConsoleOUT(Command_mark);
+        string command{};
+        cin >> command;
+        if (command == "q") {
+            return true;
+        }
+        else if (command == "change_status") {
+            ConsoleOUT(Number_of_stat);
+            int num_change_task{};
+            cin >> num_change_task;
+            OutputTasks(num_change_task);
+            not_completed = CheckNotComplited();
+        }
+        else if (command == "change_status -all") {
+            OutputTasks(true); //In Developing)
+            not_completed = CheckNotComplited();
+        }
+        else if (command == "menu") {
+            return false;
+        }
+    }
 }
