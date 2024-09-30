@@ -1,16 +1,30 @@
 #ifndef HEADER_H
 #define HEADER_H
-//
+
 #include <iostream>
+
+enum OS {Windows, Linux, etc};   
+OS getOs () {     
+    return 
+#ifdef __linux     
+    Linux; 
+#include <termcolor/termcolor.hpp>
+#elif defined _WIN32     
+    Windows;
+#include<windows.h>
+#endif 
+}
+//
+
 #include <sstream>
 #include <istream>
 #include <ostream>
 #include <cstdlib>
 #include <cmath>
 #include <vector>
-#include<windows.h>
 #include <string>
 #include <string_view>
+
 
 using namespace std;
 //
