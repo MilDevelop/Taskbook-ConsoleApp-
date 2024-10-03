@@ -11,6 +11,7 @@ void DefaultColor() {
     SetConsoleTextAttribute(hStdOut, (WORD)((Black << 4) | 15));
 }
 
+
 void ConsoleOUT(int code_message) {
     switch (code_message) {
     case 0:
@@ -113,10 +114,6 @@ void OutputTasks(bool value) {
                 cout << "X";
                 two_dimensional_array[iter][2] = "X";
             }
-            else if (j == 2 and two_dimensional_array[iter][j] == "X") {
-                cout << " ";
-                two_dimensional_array[iter][2] = " ";
-            }
             else {
                 cout << two_dimensional_array[iter][j];
             }
@@ -156,8 +153,8 @@ bool Acts::TemporaryTaskBook() {
             OutputTasks(num_change_task);
             not_completed = CheckNotComplited();
         }
-        else if (command == "change_status -all") {
-            OutputTasks(true); //In Developing)
+        else if (command == "complete-all") {
+            OutputTasks(true); 
             not_completed = CheckNotComplited();
         }
         else if (command == "menu") {

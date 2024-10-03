@@ -31,5 +31,6 @@
     <None Include="Data.md">
       <Filter>Исходные файлы</Filter>
     </None>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

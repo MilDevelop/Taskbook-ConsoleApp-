@@ -1,21 +1,9 @@
 #ifndef HEADER_H
 #define HEADER_H
 
+#ifdef _WIN32
+
 #include <iostream>
-
-enum OS {Windows, Linux, etc};   
-OS getOs () {     
-    return 
-#ifdef __linux     
-    Linux; 
-#include <termcolor/termcolor.hpp>
-#elif defined _WIN32     
-    Windows;
-#include<windows.h>
-#endif 
-}
-//
-
 #include <sstream>
 #include <istream>
 #include <ostream>
@@ -24,7 +12,7 @@ OS getOs () {    
 #include <vector>
 #include <string>
 #include <string_view>
-
+#include <Windows.h>
 
 using namespace std;
 //
@@ -74,5 +62,6 @@ namespace Acts {
     bool TemporaryTaskBook();
 }
 
+#endif
 
 #endif
