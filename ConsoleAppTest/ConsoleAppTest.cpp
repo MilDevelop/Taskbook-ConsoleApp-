@@ -10,7 +10,15 @@ int main()
         ConsoleOUT(Command_mark);
         int User_choose = choose();
         DefaultColor();
-        if (User_choose == 4) {
+        if (User_choose == 3) {
+            switch (ListOfTaskBooks()) {
+            case false:
+                goto start;
+            default:
+                break;
+            }
+        }
+        else if (User_choose == 4) {
             switch (TemporaryTaskBook()) {
             case false:
                 goto start;

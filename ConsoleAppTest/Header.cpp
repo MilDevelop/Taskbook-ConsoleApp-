@@ -11,7 +11,6 @@ void DefaultColor() {
     SetConsoleTextAttribute(hStdOut, (WORD)((Black << 4) | 15));
 }
 
-
 void ConsoleOUT(int code_message) {
     switch (code_message) {
     case 0:
@@ -76,7 +75,7 @@ void save(string user_task, int num_task) {
     two_dimensional_array.push_back(one_line);
 }
 
-void WriteTasks(int number_task) {
+void WriteTasks(int number_task, TaskBook* & TB) {
     int counter{ 0 };
     string user_task{};
     do {
@@ -86,9 +85,10 @@ void WriteTasks(int number_task) {
         save(user_task, counter);
         user_task = "";
     } while (counter != number_task);
+    (*TB).data_mtrx = two_dimensional_array;
 }
 
-void OutputTasks(int number_change) {
+void OutputTasks(int number_change, TaskBook* & TB) {
     for (int iter = 0; iter < two_dimensional_array.size(); iter++) {
         for (int j = 0; j < two_dimensional_array[iter].size(); j++) {
             if (j == 2 and two_dimensional_array[iter][j] == " " and iter == number_change - 1) {
@@ -105,9 +105,10 @@ void OutputTasks(int number_change) {
         }
         cout << endl;
     }
+    (*TB).data_mtrx = two_dimensional_array;
 }
 
-void OutputTasks(bool value) {
+void OutputTasks(bool value, TaskBook* & TB) {
     for (int iter = 0; iter < two_dimensional_array.size(); iter++) {
         for (int j = 0; j < two_dimensional_array[iter].size(); j++) {
             if (j == 2 and two_dimensional_array[iter][j] == " ") {
@@ -120,6 +121,7 @@ void OutputTasks(bool value) {
         }
         cout << endl;
     }
+    (*TB).data_mtrx = two_dimensional_array;
 }
 
 int CheckNotComplited() {
@@ -137,7 +139,10 @@ bool Acts::TemporaryTaskBook() {
     unsigned int number_of_tasks{}, not_completed{};
     cin >> number_of_tasks;
     not_completed = number_of_tasks;
-    WriteTasks(number_of_tasks);
+    TaskBook tb{};
+    TaskBook* Pointer = &tb;
+    WriteTasks(number_of_tasks, Pointer);
+    All_Stack.push_back(Pointer);
     string command{};
     while (not_completed != 0) {
         ConsoleOUT(Command_mark);
@@ -150,15 +155,21 @@ bool Acts::TemporaryTaskBook() {
             ConsoleOUT(Number_of_stat);
             int num_change_task{};
             cin >> num_change_task;
-            OutputTasks(num_change_task);
+            OutputTasks(num_change_task, Pointer);
             not_completed = CheckNotComplited();
         }
         else if (command == "complete-all") {
-            OutputTasks(true); 
+            OutputTasks(true, Pointer); 
             not_completed = CheckNotComplited();
         }
         else if (command == "menu") {
             return false;
         }
     }
+}
+
+bool Acts::ListOfTaskBooks() {
+    //
+
+    return false;
 }
