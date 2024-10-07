@@ -70,7 +70,7 @@ int CheckNotComplited();
 
 //Actions for menu
 namespace Acts {
-    bool TemporaryTaskBook();
+    bool TemporaryTaskBook(TaskBook* Pointer);
     bool ListOfTaskBooks();
 }
 

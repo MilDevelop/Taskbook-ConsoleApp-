@@ -19,9 +19,11 @@ int main()
             }
         }
         else if (User_choose == 4) {
-            switch (TemporaryTaskBook()) {
+            auto tb = new TaskBook();
+            switch (TemporaryTaskBook(tb)) {
             case false:
                 goto start;
+                delete tb;
             default:
                 return 0;
             }

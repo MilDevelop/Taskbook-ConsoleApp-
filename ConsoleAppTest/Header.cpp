@@ -134,13 +134,11 @@ int CheckNotComplited() {
     return counter;
 }
 
-bool Acts::TemporaryTaskBook() {
+bool Acts::TemporaryTaskBook(TaskBook* Pointer) {
     ConsoleOUT(Temporary_taskbook);
     unsigned int number_of_tasks{}, not_completed{};
     cin >> number_of_tasks;
     not_completed = number_of_tasks;
-    TaskBook tb{};
-    TaskBook* Pointer = &tb;
     WriteTasks(number_of_tasks, Pointer);
     All_Stack.push_back(Pointer);
     string command{};
@@ -169,7 +167,11 @@ bool Acts::TemporaryTaskBook() {
 }
 
 bool Acts::ListOfTaskBooks() {
-    //
-
+    for (auto& i : (*All_Stack[All_Stack.size() - 1]).data_mtrx) {
+        for (auto& j : i) {
+            cout << j;
+        }
+        cout << endl;
+    }
     return false;
 }
