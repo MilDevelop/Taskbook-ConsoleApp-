@@ -11,20 +11,15 @@ int main()
         int User_choose = choose();
         DefaultColor();
         if (User_choose == 3) {
-            switch (ListOfTaskBooks()) {
-            case false:
-                goto start;
-            default:
-                break;
-            }
+            TaskBook User_Tb = ListOfTaskBooks();
         }
         else if (User_choose == 4) {
             auto tb = new TaskBook();
             switch (TemporaryTaskBook(tb)) {
             case false:
                 goto start;
-                delete tb;
             default:
+                delete tb;
                 return 0;
             }
         }

@@ -36,6 +36,11 @@ void ConsoleOUT(int code_message) {
         DefaultColor();
         cout << "Enter the number change task: "sv;
         break;
+    case 5:
+        SetColor(LightBlue, Black);
+        cout << "What is Temporary TaskBook name? :\n"sv;
+        cout << '\t';
+        DefaultColor();
     default:
         break;
     }
@@ -135,6 +140,10 @@ int CheckNotComplited() {
 }
 
 bool Acts::TemporaryTaskBook(TaskBook* Pointer) {
+    string name_of_TTB{};
+    ConsoleOUT(Named_for_TB);
+    cin >> name_of_TTB;
+    Pointer->name = name_of_TTB;
     ConsoleOUT(Temporary_taskbook);
     unsigned int number_of_tasks{}, not_completed{};
     cin >> number_of_tasks;
@@ -166,12 +175,20 @@ bool Acts::TemporaryTaskBook(TaskBook* Pointer) {
     }
 }
 
-bool Acts::ListOfTaskBooks() {
-    for (auto& i : (*All_Stack[All_Stack.size() - 1]).data_mtrx) {
-        for (auto& j : i) {
-            cout << j;
-        }
-        cout << endl;
+TaskBook Acts::ListOfTaskBooks() {
+    TaskBook* cache;
+    cache = new TaskBook[All_Stack.size()];
+    for (int i = 0; i < All_Stack.size(); ++i) {
+        cout << i + 1 << " -> " << All_Stack[i]->name << " ";
+        cache[i] = *All_Stack[i];
     }
-    return false;
+    auto choose = new int;
+    cin >> *choose;
+    if (*choose <= All_Stack.size()) {
+        TaskBook res = cache[*choose - 1];
+        delete[] cache;
+        delete choose;
+        return res;
+    }
+        
 }

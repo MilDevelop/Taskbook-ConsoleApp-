@@ -43,13 +43,18 @@ enum message_code
      Temporary_taskbook = 2,
      Command_mark = 3,
      Number_of_stat = 4,
+     Named_for_TB = 5
 };
+
 
 //Define TaskBook
 struct TaskBook {
     vector<vector<string>> data_mtrx;
-    TaskBook() : data_mtrx(NULL) {};
-    TaskBook(vector<vector<string>>& data) : data_mtrx(data) {};
+    string name; //Fucking up this string !!!
+    TaskBook() : data_mtrx(NULL), name("Untitled TaskBook") {};
+    TaskBook(vector<vector<string>>& data, string& name) : data_mtrx(data), name(name) {};
+    TaskBook(string& name) : data_mtrx(NULL), name(name) {};
+    TaskBook(vector<vector<string>>& data) : data_mtrx(data), name("Untitled TaskBook") {};
 };
     
 
@@ -71,7 +76,7 @@ int CheckNotComplited();
 //Actions for menu
 namespace Acts {
     bool TemporaryTaskBook(TaskBook* Pointer);
-    bool ListOfTaskBooks();
+    TaskBook ListOfTaskBooks();
 }
 
 #endif
