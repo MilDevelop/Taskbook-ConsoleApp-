@@ -72,11 +72,13 @@ void OutputTasks(int number_change, TaskBook* & TB);
 void OutputTasks(bool value, TaskBook* & TB);
 void WriteTasks(int number_task, TaskBook* & TB);
 int CheckNotComplited();
+int CheckNotComplited(vector<vector<string>>& matrix);
 
 //Actions for menu
 namespace Acts {
+    bool TTB_Conslole(TaskBook* Pointer);
     bool TemporaryTaskBook(TaskBook* Pointer);
-    TaskBook ListOfTaskBooks();
+    void ListOfTaskBooks();
 }
 
 #endif

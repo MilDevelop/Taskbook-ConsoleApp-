@@ -116,7 +116,7 @@ void OutputTasks(int number_change, TaskBook* & TB) {
 void OutputTasks(bool value, TaskBook* & TB) {
     for (int iter = 0; iter < two_dimensional_array.size(); iter++) {
         for (int j = 0; j < two_dimensional_array[iter].size(); j++) {
-            if (j == 2 and two_dimensional_array[iter][j] == " ") {
+            if (j == 2 and two_dimensional_array[iter][j] == " " and value == true) {
                 cout << "X";
                 two_dimensional_array[iter][2] = "X";
             }
@@ -129,7 +129,7 @@ void OutputTasks(bool value, TaskBook* & TB) {
     (*TB).data_mtrx = two_dimensional_array;
 }
 
-int CheckNotComplited() {
+int CheckNotComplited() { 
     int counter{};
     for (auto& iter : two_dimensional_array) {
         if (iter[2] == " ") {
@@ -139,18 +139,21 @@ int CheckNotComplited() {
     return counter;
 }
 
-bool Acts::TemporaryTaskBook(TaskBook* Pointer) {
-    string name_of_TTB{};
-    ConsoleOUT(Named_for_TB);
-    cin >> name_of_TTB;
-    Pointer->name = name_of_TTB;
-    ConsoleOUT(Temporary_taskbook);
-    unsigned int number_of_tasks{}, not_completed{};
-    cin >> number_of_tasks;
-    not_completed = number_of_tasks;
-    WriteTasks(number_of_tasks, Pointer);
-    All_Stack.push_back(Pointer);
+int CheckNotComplited(vector<vector<string>>& matrix) {
+    int counter{};
+    for (auto& iter : matrix) {
+        if (iter[2] == " ") {
+            counter++;
+        }
+    }
+    return counter;
+}
+
+bool Acts::TTB_Conslole(TaskBook* Pointer) {
+    system("cls");
+    OutputTasks(false, Pointer);
     string command{};
+    unsigned int not_completed = CheckNotComplited(Pointer->data_mtrx);
     while (not_completed != 0) {
         ConsoleOUT(Command_mark);
         string command{};
@@ -166,7 +169,7 @@ bool Acts::TemporaryTaskBook(TaskBook* Pointer) {
             not_completed = CheckNotComplited();
         }
         else if (command == "complete-all") {
-            OutputTasks(true, Pointer); 
+            OutputTasks(true, Pointer);
             not_completed = CheckNotComplited();
         }
         else if (command == "menu") {
@@ -175,20 +178,34 @@ bool Acts::TemporaryTaskBook(TaskBook* Pointer) {
     }
 }
 
-TaskBook Acts::ListOfTaskBooks() {
-    TaskBook* cache;
-    cache = new TaskBook[All_Stack.size()];
+
+bool Acts::TemporaryTaskBook(TaskBook* Pointer) {
+    two_dimensional_array.clear();
+    string name_of_TTB{};
+    ConsoleOUT(Named_for_TB);
+    cin >> name_of_TTB;
+    Pointer->name = name_of_TTB;
+    ConsoleOUT(Temporary_taskbook);
+    unsigned int number_of_tasks{}, not_completed{};
+    cin >> number_of_tasks;
+    not_completed = number_of_tasks;
+    WriteTasks(number_of_tasks, Pointer);
+    All_Stack.push_back(Pointer);
+    return TTB_Conslole(Pointer);
+}
+
+void Acts::ListOfTaskBooks() {
     for (int i = 0; i < All_Stack.size(); ++i) {
         cout << i + 1 << " -> " << All_Stack[i]->name << " ";
-        cache[i] = *All_Stack[i];
     }
     auto choose = new int;
+    ConsoleOUT(Command_mark);
     cin >> *choose;
     if (*choose <= All_Stack.size()) {
-        TaskBook res = cache[*choose - 1];
-        delete[] cache;
+        TaskBook* temp = All_Stack[All_Stack.size() - 1];
+        All_Stack[All_Stack.size() - 1] = All_Stack[*choose - 1];
+        All_Stack[*choose - 1] = temp;
         delete choose;
-        return res;
     }
-        
+    cout << endl;
 }

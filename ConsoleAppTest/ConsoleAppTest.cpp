@@ -11,7 +11,9 @@ int main()
         int User_choose = choose();
         DefaultColor();
         if (User_choose == 3) {
-            TaskBook User_Tb = ListOfTaskBooks();
+            do {
+                ListOfTaskBooks(); //????
+            } while (TTB_Conslole(All_Stack[All_Stack.size() - 1]));
         }
         else if (User_choose == 4) {
             auto tb = new TaskBook();
