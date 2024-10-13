@@ -16,7 +16,6 @@
 #include <Windows.h>
 
 using namespace std;
-//
 enum ConsoleColor
 {
     Black = 0,
