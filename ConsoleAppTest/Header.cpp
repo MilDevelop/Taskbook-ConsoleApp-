@@ -13,37 +13,46 @@ void DefaultColor() {
 
 void ConsoleOUT(int code_message) {
     switch (code_message) {
-    case 0:
-        cout << "Hello, welcome to the universal console application called Taskbook!"sv << endl;
+    case 0: 
         break;
     case 1:
-        cout << "Choose action, please: "sv << endl;
-        SetColor(LightBlue, Black);
-        cout << "  · Create new taskbook - 1\n  · Settings - 2\n  · Open list my taskbooks - 3\n  · Create a temporary task book - 4\n  · Exit - Q\n"sv;
-        DefaultColor();
+        cout << "Hello, welcome to the universal console application called Taskbook!"sv << endl;
         break;
     case 2:
-        SetColor(LightGray, Black);
-        cout << "\tYour taskbook on today\n";
-        cout << "Enter the number of tasks and after enter the tasks: ";
-        DefaultColor();
+        cout << "Choose action, please: "sv << endl;
+        SetColor(LightBlue, Black);
+        cout << "  Â· Create new taskbook - 1\n  Â· Settings - 2\n  Â· Open list my taskbooks - 3\n  Â· Create a temporary task book - 4\n  Â· Exit - Q\n"sv;
         break;
     case 3:
         SetColor(LightGray, Black);
-        cout << " > ";
+        cout << "\tYour taskbook on today\n";
+        cout << "Enter the number of tasks and after enter the tasks: ";
         break;
     case 4:
+        SetColor(LightGray, Black);
+        cout << " > ";
+        break;
+    case 5:
         DefaultColor();
         cout << "Enter the number change task: "sv;
         break;
-    case 5:
+    case 6:
         SetColor(LightBlue, Black);
         cout << "What is Temporary TaskBook name? :\n"sv;
         cout << '\t';
-        DefaultColor();
+        break;
+    case 7:
+        SetColor(Red, Black);
+        cout << "\nYour need write a number in this field (:\n"sv;
+        break;
+    case 8:
+        SetColor(Red, Black);
+        cout << "\nOut of range\n"sv;
+        break;
     default:
         break;
     }
+    DefaultColor();
 }
 
 int choose() {
@@ -149,8 +158,9 @@ int CheckNotComplited(vector<vector<string>>& matrix) {
     return counter;
 }
 
-bool Acts::TTB_Conslole(TaskBook* Pointer) {
+bool Acts::TTB_Conslole(TaskBook* Pointer, unsigned int error_code) {
     system("cls");
+    ConsoleOUT(error_code);
     OutputTasks(false, Pointer);
     string command{};
     unsigned int not_completed = CheckNotComplited(Pointer->data_mtrx);
@@ -191,21 +201,37 @@ bool Acts::TemporaryTaskBook(TaskBook* Pointer) {
     not_completed = number_of_tasks;
     WriteTasks(number_of_tasks, Pointer);
     All_Stack.push_back(Pointer);
-    return TTB_Conslole(Pointer);
+    return TTB_Conslole(Pointer, NoProblem);
 }
 
-void Acts::ListOfTaskBooks() {
+
+
+bool Acts::ListOfTaskBooks() {
     for (int i = 0; i < All_Stack.size(); ++i) {
         cout << i + 1 << " -> " << All_Stack[i]->name << " ";
     }
     auto choose = new int;
+    Input:
     ConsoleOUT(Command_mark);
     cin >> *choose;
-    if (*choose <= All_Stack.size()) {
+    if (cin.fail()) { 
+        ConsoleOUT(TypeError_Message);
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        goto Input; 
+    }
+    else if (abs(*choose) <= All_Stack.size()) {
         TaskBook* temp = All_Stack[All_Stack.size() - 1];
         All_Stack[All_Stack.size() - 1] = All_Stack[*choose - 1];
         All_Stack[*choose - 1] = temp;
         delete choose;
+        cout << endl;
+        return true;
     }
-    cout << endl;
+    else {
+        return false;
+    }
 }
+
+
+
