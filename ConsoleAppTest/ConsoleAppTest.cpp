@@ -1,19 +1,25 @@
-﻿#include "Header.h"
+#include "Header.h"
 using namespace Acts;
 
 int main()
 { 
     while (true) {
-        start:
         ConsoleOUT(Openning);
+        start:
         ConsoleOUT(Choose_menu);
         ConsoleOUT(Command_mark);
         int User_choose = choose();
         DefaultColor();
         if (User_choose == 3) {
+            unsigned int error_code{};
             do {
-                ListOfTaskBooks(); //????
-            } while (TTB_Conslole(All_Stack[All_Stack.size() - 1]));
+                error_code = NoProblem;
+                switch (ListOfTaskBooks()) {
+                case false:
+                    error_code = ListError_Message;
+                    if (All_Stack.size() == 0) { goto start; }
+                }
+            } while (TTB_Conslole(All_Stack[All_Stack.size() - 1], error_code));
         }
         else if (User_choose == 4) {
             auto tb = new TaskBook();
@@ -29,3 +35,6 @@ int main()
     }
     return 0;
 }
+
+
+
