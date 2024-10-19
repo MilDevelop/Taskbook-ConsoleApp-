@@ -15,7 +15,13 @@
 #include <string_view>
 #include <Windows.h>
 
+#ifdef max
+#undef max
+#endif
+
+
 using namespace std;
+//
 enum ConsoleColor
 {
     Black = 0,
@@ -37,12 +43,15 @@ enum ConsoleColor
 };
 enum message_code
 {
-     Openning = 0,
-     Choose_menu = 1,
-     Temporary_taskbook = 2,
-     Command_mark = 3,
-     Number_of_stat = 4,
-     Named_for_TB = 5
+     NoProblem = 0,
+     Openning = 1,
+     Choose_menu = 2,
+     Temporary_taskbook = 3,
+     Command_mark = 4,
+     Number_of_stat = 5,
+     Named_for_TB = 6,
+     TypeError_Message = 7,
+     ListError_Message = 8
 };
 
 
@@ -75,9 +84,9 @@ int CheckNotComplited(vector<vector<string>>& matrix);
 
 //Actions for menu
 namespace Acts {
-    bool TTB_Conslole(TaskBook* Pointer);
+    bool TTB_Conslole(TaskBook* Pointer, unsigned int error_code);
     bool TemporaryTaskBook(TaskBook* Pointer);
-    void ListOfTaskBooks();
+    bool ListOfTaskBooks();
 }
 
 #endif
