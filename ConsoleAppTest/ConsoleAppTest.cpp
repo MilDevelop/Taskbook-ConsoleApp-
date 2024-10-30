@@ -10,7 +10,17 @@ int main()
         ConsoleOUT(Command_mark);
         int User_choose = choose();
         DefaultColor();
-        if (User_choose == 3) {
+        if (User_choose == 2) {
+            auto tb = new TaskBook();
+            switch (StableTaskBook(tb)) {
+            case false:
+                goto start;
+            default:
+                delete tb;
+                return 0;
+            }
+        }
+        else if (User_choose == 3) {
             unsigned int error_code{};
             do {
                 error_code = NoProblem;
@@ -19,7 +29,7 @@ int main()
                     error_code = ListError_Message;
                     if (All_Stack.size() == 0) { goto start; }
                 }
-            } while (TTB_Conslole(All_Stack[All_Stack.size() - 1], error_code));
+            } while (TB_Conslole(All_Stack[All_Stack.size() - 1], error_code));
         }
         else if (User_choose == 4) {
             auto tb = new TaskBook();
@@ -35,6 +45,4 @@ int main()
     }
     return 0;
 }
-
-
 

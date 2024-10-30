@@ -1,22 +1,24 @@
 #ifndef HEADER_H
 #define HEADER_H
 
-#ifdef _WIN32
-
 #include <iostream>
 #include <sstream>
 #include <istream>
 #include <ostream>
+#include <fstream>
 #include <cstdlib>
 #include <cmath>
 #include <vector>
 #include <string>
 #include <stack>
 #include <string_view>
+#ifdef _WIN32
+
 #include <Windows.h>
 
 #ifdef max
 #undef max
+
 #endif
 
 
@@ -51,7 +53,8 @@ enum message_code
      Number_of_stat = 5,
      Named_for_TB = 6,
      TypeError_Message = 7,
-     ListError_Message = 8
+     ListError_Message = 8,
+     Stable_TaskBook = 9
 };
 
 
@@ -59,6 +62,8 @@ enum message_code
 struct TaskBook {
     vector<vector<string>> data_mtrx;
     string name; //Fucking up this string !!!
+    bool stable = false;
+    pair<int, int> place_in_SavedFile;
     TaskBook() : data_mtrx(NULL), name("Untitled TaskBook") {};
     TaskBook(vector<vector<string>>& data, string& name) : data_mtrx(data), name(name) {};
     TaskBook(string& name) : data_mtrx(NULL), name(name) {};
@@ -68,6 +73,7 @@ struct TaskBook {
 
 inline vector<vector<string>> two_dimensional_array;
 inline vector<TaskBook*> All_Stack;
+
 // application functions
 void SetColor(int text, int background);
 void DefaultColor();
@@ -76,16 +82,19 @@ int choose();
 // For temporary task book
 
 void save(string user_task, int number_task);
-void OutputTasks(int number_change, TaskBook* & TB);
-void OutputTasks(bool value, TaskBook* & TB);
-void WriteTasks(int number_task, TaskBook* & TB);
+void OutputTasks(int number_change, TaskBook* TB);
+void OutputTasks(bool value, TaskBook* TB);
+void WriteTasks(int number_task, TaskBook* TB);
 int CheckNotComplited();
 int CheckNotComplited(vector<vector<string>>& matrix);
-
+//for stable TaskBook
+void file_save(vector<vector<string>>& cache); //rewrite
+void file_save(vector<vector<string>>& cache, TaskBook* Pointer); //add info
 //Actions for menu
 namespace Acts {
-    bool TTB_Conslole(TaskBook* Pointer, unsigned int error_code);
+    bool TB_Conslole(TaskBook* Pointer, unsigned int error_code);
     bool TemporaryTaskBook(TaskBook* Pointer);
+    bool StableTaskBook(TaskBook* Pointer);
     bool ListOfTaskBooks();
 }
 

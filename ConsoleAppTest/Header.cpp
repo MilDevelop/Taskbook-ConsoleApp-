@@ -38,7 +38,7 @@ void ConsoleOUT(int code_message) {
         break;
     case 6:
         SetColor(LightBlue, Black);
-        cout << "What is Temporary TaskBook name? :\n"sv;
+        cout << "What is TaskBook name? :\n"sv;
         cout << '\t';
         break;
     case 7:
@@ -48,6 +48,12 @@ void ConsoleOUT(int code_message) {
     case 8:
         SetColor(Red, Black);
         cout << "\nOut of range\n"sv;
+        break;
+    case 9:
+        SetColor(LightGreen, Black);
+        cout << "\tYour taskbook on today\n";
+        SetColor(LightGray, Black);
+        cout << "Enter the number of tasks and after enter the tasks: ";
         break;
     default:
         break;
@@ -89,7 +95,7 @@ void save(string user_task, int num_task) {
     two_dimensional_array.push_back(one_line);
 }
 
-void WriteTasks(int number_task, TaskBook* & TB) {
+void WriteTasks(int number_task, TaskBook* TB) {
     int counter{ 0 };
     string user_task{};
     do {
@@ -102,7 +108,7 @@ void WriteTasks(int number_task, TaskBook* & TB) {
     (*TB).data_mtrx = two_dimensional_array;
 }
 
-void OutputTasks(int number_change, TaskBook* & TB) {
+void OutputTasks(int number_change, TaskBook* TB) {
     for (int iter = 0; iter < two_dimensional_array.size(); iter++) {
         for (int j = 0; j < two_dimensional_array[iter].size(); j++) {
             if (j == 2 and two_dimensional_array[iter][j] == " " and iter == number_change - 1) {
@@ -122,7 +128,7 @@ void OutputTasks(int number_change, TaskBook* & TB) {
     (*TB).data_mtrx = two_dimensional_array;
 }
 
-void OutputTasks(bool value, TaskBook* & TB) {
+void OutputTasks(bool value, TaskBook* TB) {
     for (int iter = 0; iter < two_dimensional_array.size(); iter++) {
         for (int j = 0; j < two_dimensional_array[iter].size(); j++) {
             if (j == 2 and two_dimensional_array[iter][j] == " " and value == true) {
@@ -158,7 +164,26 @@ int CheckNotComplited(vector<vector<string>>& matrix) {
     return counter;
 }
 
-bool Acts::TTB_Conslole(TaskBook* Pointer, unsigned int error_code) {
+
+void file_save(vector<vector<string>>& cache) { //rewrite
+    
+}
+
+void file_save(vector<vector<string>>& cache, TaskBook* Pointer) { //Add info
+
+    ofstream SavedFile("Data.md", ios::app);
+    SavedFile << "### " << Pointer->name << endl;
+    for (auto& item : cache) {
+        for (auto& ch : item) {
+            SavedFile << ch;
+        }
+        SavedFile << endl;
+    }
+    SavedFile.close();
+}
+
+
+bool Acts::TB_Conslole(TaskBook* Pointer, unsigned int error_code) {
     system("cls");
     ConsoleOUT(error_code);
     OutputTasks(false, Pointer);
@@ -176,10 +201,12 @@ bool Acts::TTB_Conslole(TaskBook* Pointer, unsigned int error_code) {
             int num_change_task{};
             cin >> num_change_task;
             OutputTasks(num_change_task, Pointer);
+            if (Pointer->stable) { file_save(two_dimensional_array, Pointer); }
             not_completed = CheckNotComplited();
         }
         else if (command == "complete-all") {
             OutputTasks(true, Pointer);
+            if (Pointer->stable) { file_save(two_dimensional_array, Pointer); }
             not_completed = CheckNotComplited();
         }
         else if (command == "menu") {
@@ -201,10 +228,25 @@ bool Acts::TemporaryTaskBook(TaskBook* Pointer) {
     not_completed = number_of_tasks;
     WriteTasks(number_of_tasks, Pointer);
     All_Stack.push_back(Pointer);
-    return TTB_Conslole(Pointer, NoProblem);
+    return TB_Conslole(Pointer, NoProblem);
 }
 
-
+bool Acts::StableTaskBook(TaskBook* Pointer) {
+    two_dimensional_array.clear();
+    string name_of_STB{};
+    ConsoleOUT(Named_for_TB);
+    cin >> name_of_STB;
+    Pointer->name = name_of_STB;
+    Pointer->stable = true;
+    ConsoleOUT(Stable_TaskBook);
+    unsigned int number_of_tasks{}, not_completed{};
+    cin >> number_of_tasks;
+    not_completed = number_of_tasks;
+    WriteTasks(number_of_tasks, Pointer);
+    All_Stack.push_back(Pointer);
+    file_save(two_dimensional_array, Pointer);
+    return TB_Conslole(Pointer, NoProblem);
+}
 
 bool Acts::ListOfTaskBooks() {
     for (int i = 0; i < All_Stack.size(); ++i) {
