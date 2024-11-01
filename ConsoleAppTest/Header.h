@@ -79,6 +79,7 @@ void SetColor(int text, int background);
 void DefaultColor();
 void ConsoleOUT(int code_message);
 int choose();
+int LastLine(ifstream& in);
 // For temporary task book
 
 void save(string user_task, int number_task);
@@ -88,7 +89,7 @@ void WriteTasks(int number_task, TaskBook* TB);
 int CheckNotComplited();
 int CheckNotComplited(vector<vector<string>>& matrix);
 //for stable TaskBook
-void file_save(vector<vector<string>>& cache); //rewrite
+void file_change(vector<vector<string>>& cache, TaskBook* Pointer); //rewrite
 void file_save(vector<vector<string>>& cache, TaskBook* Pointer); //add info
 //Actions for menu
 namespace Acts {

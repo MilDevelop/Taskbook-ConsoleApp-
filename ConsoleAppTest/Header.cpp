@@ -87,6 +87,14 @@ int choose() {
     } while (right_input == false);
 }
 
+int LastLine(ifstream& in) {
+    int counter{};
+    string buf{};
+    while (getline(in, buf))
+        counter++;
+    return counter+1;
+}
+
 
 void save(string user_task, int num_task) {
     vector<string> one_line;
@@ -165,13 +173,43 @@ int CheckNotComplited(vector<vector<string>>& matrix) {
 }
 
 
-void file_save(vector<vector<string>>& cache) { //rewrite
-    
+void file_change(vector<vector<string>>& cache, TaskBook* Pointer) {
+    ifstream file("Data.md");
+    int i_number_line_now = 0, counter = -1; 
+    string line; 
+    string line_file_text; 
+    while (getline(file, line))
+    {
+        i_number_line_now++;
+
+        if (i_number_line_now <= Pointer->place_in_SavedFile.second and
+            i_number_line_now >= Pointer->place_in_SavedFile.first) {
+            string temp{};
+            if (counter == -1) { line_file_text.insert(line_file_text.size(), "### " + Pointer->name + '\n'); counter++; }
+            else {
+                for (auto& i : cache[counter]) {
+                    temp.append(i);
+                }
+                counter++;
+                line_file_text.insert(line_file_text.size(), temp+='\n');
+            }
+            
+            
+        }
+        else { line_file_text.insert(line_file_text.size(), line+='\n'); }
+    }
+    file.close();
+    ofstream file_out("Data.md", ios::trunc | ios::binary);
+    file_out.write(line_file_text.c_str(), line_file_text.size());
+    file_out.clear();
 }
 
 void file_save(vector<vector<string>>& cache, TaskBook* Pointer) { //Add info
-
     ofstream SavedFile("Data.md", ios::app);
+    ifstream ReadFile("Data.md", ios::app);
+    int Last = LastLine(ReadFile);
+    Pointer->place_in_SavedFile = { Last, Last+cache.size()};
+    ReadFile.close();
     SavedFile << "### " << Pointer->name << endl;
     for (auto& item : cache) {
         for (auto& ch : item) {
@@ -180,6 +218,7 @@ void file_save(vector<vector<string>>& cache, TaskBook* Pointer) { //Add info
         SavedFile << endl;
     }
     SavedFile.close();
+    
 }
 
 
@@ -201,12 +240,12 @@ bool Acts::TB_Conslole(TaskBook* Pointer, unsigned int error_code) {
             int num_change_task{};
             cin >> num_change_task;
             OutputTasks(num_change_task, Pointer);
-            if (Pointer->stable) { file_save(two_dimensional_array, Pointer); }
+            if (Pointer->stable) { file_change(two_dimensional_array, Pointer); }
             not_completed = CheckNotComplited();
         }
         else if (command == "complete-all") {
             OutputTasks(true, Pointer);
-            if (Pointer->stable) { file_save(two_dimensional_array, Pointer); }
+            if (Pointer->stable) { file_change(two_dimensional_array, Pointer); }
             not_completed = CheckNotComplited();
         }
         else if (command == "menu") {
