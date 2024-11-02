@@ -10,7 +10,7 @@ int main()
         ConsoleOUT(Command_mark);
         int User_choose = choose();
         DefaultColor();
-        if (User_choose == 2) {
+        if (User_choose == 1) {
             auto tb = new TaskBook();
             switch (StableTaskBook(tb)) {
             case false:
