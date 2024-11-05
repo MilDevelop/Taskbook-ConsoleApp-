@@ -54,7 +54,8 @@ enum message_code
      Named_for_TB = 6,
      TypeError_Message = 7,
      ListError_Message = 8,
-     Stable_TaskBook = 9
+     Stable_TaskBook = 9,
+     EmptyListOfTasks = 10
 };
 
 

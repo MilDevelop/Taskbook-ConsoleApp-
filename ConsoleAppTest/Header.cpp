@@ -55,6 +55,12 @@ void ConsoleOUT(int code_message) {
         SetColor(LightGray, Black);
         cout << "Enter the number of tasks and after enter the tasks: ";
         break;
+    case 10: 
+        SetColor(Red, Black);
+        cout << "\nList of TaskBooks is empty...\n"sv;
+        SetColor(LightGray, Black);
+        cout << "\nYou can create new To-Do List or open existing\n"sv;
+        break;
     default:
         break;
     }
